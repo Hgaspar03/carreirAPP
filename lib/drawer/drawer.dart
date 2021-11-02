@@ -1,4 +1,13 @@
+import 'package:career_app/drawer/drawer_bloc.dart';
+import 'package:career_app/screens/earning_deduction.dart';
+import 'package:career_app/screens/loan_simulator.dart';
+import 'package:career_app/screens/perfil-screen.dart';
+import 'package:career_app/screens/settings.dart';
+import 'package:career_app/screens/tax.dart';
+import 'package:career_app/screens/wage_mapping.dart';
+import 'package:career_app/utils/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CareerDrawer extends StatelessWidget {
   const CareerDrawer({Key key}) : super(key: key);
@@ -11,94 +20,91 @@ class CareerDrawer extends StatelessWidget {
           margin: EdgeInsets.zero,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Colors.blueGrey[300], Colors.white30],
-                begin: Alignment.topRight,
+                colors: [Colors.green[200], Colors.green[50], Colors.green[50]],
+                begin: Alignment.topCenter,
                 end: Alignment.bottomLeft),
           ),
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blueGrey[100],
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                margin: EdgeInsets.only(right: 10, bottom: 25),
-                padding: EdgeInsets.zero,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.account_box_rounded,
-                    size: 120,
+              UserAccountsDrawerHeader(
+                onDetailsPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PersfilScreen(),
                   ),
-                  title: Padding(
-                    padding: const EdgeInsets.only(bottom: 15, top: 30),
-                    child: Text(
-                      "Alexande Pedro Guimarães",
-                      textAlign: TextAlign.center,
-                      softWrap: true,
+                ),
+                margin: EdgeInsets.only(right: 1),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/drawer-backgroud.webp"),
+                      fit: BoxFit.fill),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.elliptical(50, 20),
+                      bottomRight: Radius.circular(35)),
+                  border: Border.all(
+                      color: Colors.blueGrey,
+                      width: 2,
+                      style: BorderStyle.solid),
+                ),
+                accountName: Text(
+                  "Helenio de Vasconcelos",
+                  style: TextStyle(color: Colors.blueGrey[100]),
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                ),
+                accountEmail: Text(
+                  "Instrutor Técnico Pedagógico N1",
+                  style: TextStyle(color: Colors.blueGrey[200]),
+                  textAlign: TextAlign.center,
+                ),
+                currentAccountPictureSize: const Size.fromRadius(40),
+                currentAccountPicture: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: AssetImage(
+                      'assets/images/helenio.jpg',
                     ),
                   ),
-                  subtitle: Text(
-                    "Instrutor Técnico Pedagógico N1",
-                    textAlign: TextAlign.center,
-                  ),
-                  horizontalTitleGap: -5,
-                  contentPadding: EdgeInsets.only(top: 22),
                 ),
               ),
-              ListTile(
-                title: Text("Perfil"),
-                trailing: Icon(Icons.account_circle),
-                minVerticalPadding: 5,
-                selectedTileColor: Colors.grey,
-                dense: true,
-                hoverColor: Colors.grey,
+              SizedBox(
+                height: 20,
               ),
+              DrawerBloc().listTile(
+                  context: context,
+                  title: "Meu Perfil",
+                  icon: Icons.account_circle,
+                  nextScreen: PersfilScreen()),
+              DrawerBloc().listTile(
+                  context: context,
+                  title: "Mapeamento Salarial",
+                  icon: Icons.monetization_on,
+                  nextScreen: WageMappingScreen()),
+              DrawerBloc().listTile(
+                  context: context,
+                  title: "Registar Abonos ou Descontos",
+                  icon: Icons.money,
+                  nextScreen: EarningAndDeductionScreen()),
+              DrawerBloc().listTile(
+                  context: context,
+                  title: "Calcular Impostos/INSS",
+                  icon: Icons.verified,
+                  nextScreen: TaxScreen()),
+              DrawerBloc().listTile(
+                  context: context,
+                  title: "Simular Emprestimo Bancário",
+                  icon: Icons.calculate,
+                  nextScreen: LoanSimulatorScreen()),
               Divider(height: 5),
-              ListTile(
-                title: Text("Mapeamento Salarial"),
-                trailing: Icon(Icons.monetization_on),
-                minVerticalPadding: 5,
-                selectedTileColor: Colors.grey,
-                dense: true,
-                hoverColor: Colors.grey,
-              ),
-              Divider(height: 5),
-              ListTile(
-                title: Text("Registar Abonos ou Descontos"),
-                trailing: Icon(Icons.money),
-                minVerticalPadding: 5,
-                selectedTileColor: Colors.grey,
-                dense: true,
-                hoverColor: Colors.grey,
-              ),
-              Divider(height: 5),
-              ListTile(
-                title: Text("Calcular Impostos/INSS"),
-                trailing: Icon(Icons.verified),
-                minVerticalPadding: 5,
-                selectedTileColor: Colors.grey,
-                dense: true,
-                hoverColor: Colors.grey,
-              ),
-              Divider(height: 5),
-              ListTile(
-                title: Text("Simular Emprestimo Bancário"),
-                trailing: Icon(Icons.calculate),
-                minVerticalPadding: 5,
-                selectedTileColor: Colors.grey,
-                dense: true,
-                hoverColor: Colors.grey,
-              ),
-              Divider(height: 5),
-              ListTile(
-                minVerticalPadding: 5,
-                selectedTileColor: Colors.grey,
-                dense: true,
-                hoverColor: Colors.grey,
-                title: Text("Definições"),
-                trailing: Icon(Icons.settings),
-              ),
+              DrawerBloc().listTile(
+                  context: context,
+                  title: "Definições",
+                  icon: Icons.settings,
+                  nextScreen: SettingsScreen()),
             ],
           )),
     );

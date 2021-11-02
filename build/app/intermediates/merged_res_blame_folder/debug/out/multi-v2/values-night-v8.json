@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/hgaspar/Desktop/career-app/career_app/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
+            "outputFile": "/home/hgaspar/Desktop/career-app/career_app/carreirAPP/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/home/hgaspar/Desktop/career-app/career_app/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/home/hgaspar/Desktop/career-app/career_app/carreirAPP/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

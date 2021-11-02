@@ -1,0 +1,25 @@
+GET https://example.com/comments/1 HTTP/1.1
+
+###
+
+GET http://172.31.4.66:8081/integration/assignment-salary/27A001141/105508166
+
+###
+GET http://172.31.4.66:8081/integration/earningDedution/hasBankDeductionFixation/27A001141/105508166
+
+###
+GET http://172.31.4.66:8081/integration/earningDedution/hasApplicableEarningDeduction/27A001141/105508166
+
+###
+GET http://172.31.4.66:8081/integration/earningDedution/fixedEarningDeduction/27A001141/105508166
+
+
+###
+
+POST https://example.com/comments HTTP/1.1
+content-type: application/json
+
+{
+    "name": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
