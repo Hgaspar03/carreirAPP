@@ -1,6 +1,7 @@
-import 'package:career_app/drawer/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'model/drawer/drawer.dart';
 
 void main() {
   runApp(MyApp());
@@ -74,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       drawer: CareerDrawer(),
       appBar: AppBar(
+        elevation: 0,
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColorDark,
         title: Text("CarreirAPP"),
