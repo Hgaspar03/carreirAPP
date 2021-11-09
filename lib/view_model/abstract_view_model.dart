@@ -74,19 +74,22 @@ class AbstractViewModel extends ChangeNotifier {
 
   Widget roundedButtom(BuildContext context,
       {@required String title, @required Function onPressed}) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        elevation: 5,
-        primary: Theme.of(context).primaryColor,
-        onPrimary: Colors.white,
-        shape: const RoundedRectangleBorder(
-            side: BorderSide.none,
-            borderRadius: BorderRadius.all(Radius.circular(20))),
-      ),
-      onPressed: onPressed,
-      child: Text(
-        "$title",
-        style: TextStyle(fontSize: 17, color: Colors.blueGrey[50]),
+    return Container(
+      width: MediaQuery.of(context).size.width - 2,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          elevation: 5,
+          primary: Theme.of(context).primaryColorDark,
+          onPrimary: Colors.white,
+          shape: const RoundedRectangleBorder(
+              side: BorderSide.none,
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+        ),
+        onPressed: onPressed,
+        child: Text(
+          "$title",
+          style: TextStyle(fontSize: 14, color: Colors.blueGrey[50]),
+        ),
       ),
     );
   }

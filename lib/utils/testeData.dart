@@ -37,6 +37,8 @@ class TesteData extends StatelessWidget {
     "Especial diferenciado",
   ];
 
+  static List earningDeductionTypes = ["Abono", "Desconto"];
+
   @override
   Widget build(BuildContext context) {
     return Container();
