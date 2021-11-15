@@ -3,6 +3,7 @@ import 'package:career_app/utils/testeData.dart';
 import 'package:career_app/view_model/abstract_view_model.dart';
 import 'package:career_app/view_model/appbar_viewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WageMappingScreen extends StatefulWidget {
   const WageMappingScreen({Key key}) : super(key: key);
@@ -14,22 +15,34 @@ class WageMappingScreen extends StatefulWidget {
 }
 
 class _WageMappingScreenState extends State<WageMappingScreen> {
-  String selectedCareer;
-  String selectedClass;
-  int selectedEscalao;
-  double salarioBase;
-  String selectedRegime;
-
-  List carreiras = TesteData.carreiras;
-
-  List classes = TesteData.classes;
-
-  List escalao = TesteData.escalao;
-
-  List regime = TesteData.regime;
-
   @override
   Widget build(BuildContext context) {
+    List carreiras = context.read<TesteData>().carreiras;
+
+    List classes = context.read<TesteData>().classes;
+
+    List escalao = context.read<TesteData>().escalao;
+
+    List edt = context.read<TesteData>().earningDeductionTypes;
+
+    List regime = context.read<TesteData>().regime;
+
+    String selectedRegime = context.read<TesteData>().selectedRegime;
+
+    String selectedCareer = context.read<TesteData>().selectedCareer;
+
+    String selectedClass = context.read<TesteData>().selectedClass;
+
+    num selectedEscalao = context.read<TesteData>().selectedEscalao;
+
+    double salarioBase = context.read<TesteData>().salarioBase;
+
+    final formater = context.read<TesteData>().formater;
+
+    DateTime startDate = context.read<TesteData>().startDate;
+
+    DateTime endDate = context.read<TesteData>().endDate;
+
     return Scaffold(
       drawer: CareerDrawer(),
       appBar: CareerAppBar.appBar(context, title: "Mapeamento Salarial"),

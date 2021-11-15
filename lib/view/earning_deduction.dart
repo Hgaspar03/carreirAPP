@@ -5,7 +5,7 @@ import 'package:career_app/view_model/appbar_viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
-import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class EarningAndDeductionScreen extends StatefulWidget {
   const EarningAndDeductionScreen({Key key}) : super(key: key);
@@ -18,30 +18,36 @@ class EarningAndDeductionScreen extends StatefulWidget {
 }
 
 class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
-  String selectedCareer;
-  String selectedClass;
-  int selectedEscalao;
-  double salarioBase;
-  String selectedRegime;
-
-  DateTime startDate = DateTime.now();
-  DateTime endDate = DateTime.now();
-
-  List carreiras = TesteData.carreiras;
-
-  List classes = TesteData.classes;
-
-  List escalao = TesteData.escalao;
-
-  List edt = TesteData.earningDeductionTypes;
-
-  final formater = new DateFormat('dd-MM-yyyy');
-
   final valorController =
       MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',');
 
   @override
   Widget build(BuildContext context) {
+    List carreiras = context.read<TesteData>().carreiras;
+
+    List classes = context.read<TesteData>().classes;
+
+    List escalao = context.read<TesteData>().escalao;
+
+    List edt = context.read<TesteData>().earningDeductionTypes;
+
+    String selectedRegime = context.read<TesteData>().selectedRegime;
+
+    String selectedCareer = context.read<TesteData>().selectedCareer;
+
+    String selectedClass = context.read<TesteData>().selectedClass;
+
+    num selectedEscalao = context.read<TesteData>().selectedEscalao;
+
+    double salarioBase = context.read<TesteData>().salarioBase;
+
+    final formater = context.read<TesteData>().formater;
+
+    DateTime startDate = context.read<TesteData>().startDate;
+    DateTime endDate = context.read<TesteData>().endDate;
+
+    String type = context.read<TesteData>().type;
+
     return Scaffold(
       drawer: CareerDrawer(),
       appBar: CareerAppBar.appBar(context, title: 'Registar Abono ou Desconto'),
@@ -99,12 +105,10 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                               icon: Icon(Icons.arrow_drop_down),
                               dropdownColor:
                                   Theme.of(context).primaryColorLight,
-                              value: selectedRegime,
+                              value: (context).watch<TesteData>().type,
                               isExpanded: true,
                               onChanged: (selection) {
-                                setState(() {
-                                  selectedRegime = selection;
-                                });
+                                (context).read<TesteData>().type = selection;
                               },
                               hint: const Text(
                                 "Selecione um abono/desconto",
@@ -117,13 +121,11 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                                 return DropdownMenuItem<String>(
                                     value: e,
                                     onTap: () {
-                                      setState(() {
-                                        selectedRegime = e;
-                                        selectedCareer = null;
-                                        selectedClass = null;
-                                        selectedEscalao = null;
-                                        salarioBase = null;
-                                      });
+                                      type = e;
+                                      selectedCareer = null;
+                                      selectedClass = null;
+                                      selectedEscalao = null;
+                                      salarioBase = null;
                                     },
                                     child: Row(
                                       children: [
@@ -160,7 +162,7 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                                   .fontSize,
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(width: 22),
+                        SizedBox(width: 20),
                         GestureDetector(
                           onTap: () =>
                               _selectDate(context: context, selectedDate: 1),
@@ -211,7 +213,7 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     Row(
                       children: [
                         Text("Valor :",
@@ -239,12 +241,17 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                     ),
                     SizedBox(height: 65),
                     AbstractViewModel().roundedButtom(context,
-                        title: 'Registar', onPressed: () {}),
-                    Text(
-                      " ${salarioBase != null ? salarioBase : " "} ${salarioBase != null ? "MZN" : " "}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 22, color: Colors.grey[600]),
-                    ),
+                        title: 'Registar', onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Theme.of(context).primaryColor,
+                          content: Text(
+                            '${context.read<TesteData>().type} registado com sucesso',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    }),
                   ],
                 ),
               ),
@@ -265,9 +272,9 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
     //if (picked != null && picked != selectedDate)
     setState(() {
       if (selectedDate == 1) {
-        startDate = picked;
+        (context).read<TesteData>().startDate = picked;
       } else {
-        endDate = picked;
+        (context).read<TesteData>().endDate = picked;
       }
     });
   }

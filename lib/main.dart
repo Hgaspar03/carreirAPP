@@ -1,9 +1,13 @@
+import 'package:career_app/utils/testeData.dart';
 import 'package:career_app/view/earning_deduction.dart';
 import 'package:flutter/material.dart';
 import 'model/drawer/drawer.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => TesteData()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,46 +33,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String selectedCareer;
-  String selectedClass;
-  int selectedEscalao;
-  double salarioBase;
-  String selectedRegime;
-
-  List carreiras = [
-    "Instrutor e Técnico Pedagógico N2",
-    "Docente N1",
-    "Técnicos Superiores da Saúde N1",
-    "Assistentes Técnicos da Saúde",
-    "Agente municipal",
-    "Medicina Hospitalar",
-    "Técnico Superior de Seguros N1",
-    "Conservador e Notário Técnico",
-    "Guarda Judicial Fiscal",
-    "Técnico superior do Turismo N1",
-  ];
-
-  List classes = [
-    "Classe A",
-    "Classe B",
-    "Classe C",
-    "Classe E",
-  ];
-
-  List escalao = [
-    1,
-    2,
-    3,
-    4,
-  ];
-
-  List regime = [
-    "Geral",
-    "Específico",
-    "Especial não diferenciado",
-    "Especial diferenciado",
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
