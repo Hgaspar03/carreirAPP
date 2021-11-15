@@ -1,5 +1,5 @@
+import 'package:career_app/view/earning_deduction.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'model/drawer/drawer.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'App Carreira'),
+      home: EarningAndDeductionScreen(),
     );
   }
 }

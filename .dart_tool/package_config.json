@@ -56,8 +56,20 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_masked_text",
+      "rootUri": "file:///C:/Users/LENOVO/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_masked_text-0.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "1.23"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///C:/Users/LENOVO/flutter/packages/flutter_test",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "intl",
+      "rootUri": "file:///C:/Users/LENOVO/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -140,7 +152,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-11-04T22:42:38.943436Z",
+  "generated": "2021-11-09T12:33:12.593563Z",
   "generator": "pub",
   "generatorVersion": "2.15.0-82.0.dev"
 }

@@ -4,6 +4,8 @@ import 'package:career_app/view_model/abstract_view_model.dart';
 import 'package:career_app/view_model/appbar_viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:intl/intl.dart';
 
 class EarningAndDeductionScreen extends StatefulWidget {
   const EarningAndDeductionScreen({Key key}) : super(key: key);
@@ -32,6 +34,11 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
   List escalao = TesteData.escalao;
 
   List edt = TesteData.earningDeductionTypes;
+
+  final formater = new DateFormat('dd-MM-yyyy');
+
+  final valorController =
+      MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',');
 
   @override
   Widget build(BuildContext context) {
@@ -165,7 +172,7 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                                       bottom: BorderSide(
                                           width: 0.5, color: Colors.blueGrey))),
                               child: Text(
-                                "$startDate",
+                                "${formater.format(startDate)}",
                               ),
                             ),
                           ),
@@ -197,7 +204,7 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                                       bottom: BorderSide(
                                           width: 0.5, color: Colors.blueGrey))),
                               child: Text(
-                                "$endDate",
+                                "${formater.format(endDate)}",
                               ),
                             ),
                           ),
@@ -219,13 +226,12 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                         Expanded(
                           child: Container(
                             child: TextField(
+                              controller: valorController,
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                suffix: Text('MZN'),
-                              ),
+                              decoration: InputDecoration(suffixText: 'MZN'),
                             ),
                           ),
                         ),
