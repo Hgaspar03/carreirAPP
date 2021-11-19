@@ -5,43 +5,39 @@ import 'package:career_app/view_model/appbar_viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class WageMappingScreen extends StatefulWidget {
+class WageMappingScreen extends StatelessWidget {
   const WageMappingScreen({Key key}) : super(key: key);
 
   static const String wageMappingRoute = '/mapping';
 
   @override
-  _WageMappingScreenState createState() => _WageMappingScreenState();
-}
-
-class _WageMappingScreenState extends State<WageMappingScreen> {
-  @override
   Widget build(BuildContext context) {
-    List carreiras = context.read<TesteData>().carreiras;
+    final testeData = context.read<TesteData>();
+    List carreiras = testeData.carreiras;
 
-    List classes = context.read<TesteData>().classes;
+    List classes = testeData.classes;
 
-    List escalao = context.read<TesteData>().escalao;
+    List escalao = testeData.escalao;
 
-    List edt = context.read<TesteData>().earningDeductionTypes;
+    List edt = testeData.earningDeductionTypes;
 
-    List regime = context.read<TesteData>().regime;
+    List regime = testeData.regime;
 
-    String selectedRegime = context.read<TesteData>().selectedRegime;
+    String selectedRegime = testeData.selectedRegime;
 
-    String selectedCareer = context.read<TesteData>().selectedCareer;
+    String selectedCareer = testeData.selectedCareer;
 
-    String selectedClass = context.read<TesteData>().selectedClass;
+    String selectedClass = testeData.selectedClass;
 
-    num selectedEscalao = context.read<TesteData>().selectedEscalao;
+    num selectedEscalao = testeData.selectedEscalao;
 
-    double salarioBase = context.read<TesteData>().salarioBase;
+    double salarioBase = testeData.salarioBase;
 
-    final formater = context.read<TesteData>().formater;
+    final formater = testeData.formater;
 
-    DateTime startDate = context.read<TesteData>().startDate;
+    DateTime startDate = testeData.startDate;
 
-    DateTime endDate = context.read<TesteData>().endDate;
+    DateTime endDate = testeData.endDate;
 
     return Scaffold(
       drawer: CareerDrawer(),
@@ -63,9 +59,9 @@ class _WageMappingScreenState extends State<WageMappingScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    height: 145,
+                    height: 180,
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 60),
+                      padding: const EdgeInsets.only(top: 90),
                       child: const Text(
                         "Preencha os dados da sua carreira",
                         style: TextStyle(fontSize: 16, color: Colors.blueGrey),
@@ -92,13 +88,11 @@ class _WageMappingScreenState extends State<WageMappingScreen> {
                             isDense: true,
                             iconSize: 20,
                             icon: Icon(Icons.arrow_drop_down),
-                            dropdownColor: Colors.lightBlue[100],
-                            value: selectedRegime,
+                            dropdownColor: Theme.of(context).primaryColorLight,
+                            value: context.watch<TesteData>().selectedRegime,
                             isExpanded: true,
                             onChanged: (selection) {
-                              setState(() {
-                                selectedRegime = selection;
-                              });
+                              testeData.selectedRegime = selection;
                             },
                             hint: Padding(
                               padding: const EdgeInsets.only(left: 20),
@@ -114,13 +108,11 @@ class _WageMappingScreenState extends State<WageMappingScreen> {
                               return DropdownMenuItem<String>(
                                   value: e,
                                   onTap: () {
-                                    setState(() {
-                                      selectedRegime = e;
-                                      selectedCareer = null;
-                                      selectedClass = null;
-                                      selectedEscalao = null;
-                                      salarioBase = null;
-                                    });
+                                    selectedRegime = e;
+                                    testeData.selectedCareer = null;
+                                    testeData.selectedClass = null;
+                                    testeData.selectedEscalao = null;
+                                    testeData.salarioBase = null;
                                   },
                                   child: Row(
                                     children: [
@@ -165,13 +157,11 @@ class _WageMappingScreenState extends State<WageMappingScreen> {
                             isDense: true,
                             iconSize: 20,
                             icon: Icon(Icons.arrow_drop_down),
-                            dropdownColor: Colors.lightBlue[100],
+                            dropdownColor: Theme.of(context).primaryColorLight,
                             value: selectedCareer,
                             isExpanded: true,
                             onChanged: (selection) {
-                              setState(() {
-                                selectedCareer = selection;
-                              });
+                              testeData.selectedCareer = selection;
                             },
                             hint: Padding(
                               padding: const EdgeInsets.only(left: 20),
@@ -187,12 +177,10 @@ class _WageMappingScreenState extends State<WageMappingScreen> {
                               return DropdownMenuItem<String>(
                                   value: e,
                                   onTap: () {
-                                    setState(() {
-                                      selectedCareer = e;
-                                      selectedClass = null;
-                                      selectedEscalao = null;
-                                      salarioBase = null;
-                                    });
+                                    selectedCareer = e;
+                                    testeData.selectedClass = null;
+                                    testeData.selectedEscalao = null;
+                                    testeData.salarioBase = null;
                                   },
                                   child: Row(
                                     children: [
@@ -236,16 +224,14 @@ class _WageMappingScreenState extends State<WageMappingScreen> {
                             isDense: true,
                             iconSize: 20,
                             icon: Icon(Icons.arrow_drop_down),
-                            dropdownColor: Colors.lightBlue[100],
+                            dropdownColor: Theme.of(context).primaryColorLight,
                             value: selectedClass,
                             isExpanded: true,
                             focusColor: Theme.of(context).primaryColor,
                             onChanged: (selection) {
-                              setState(() {
-                                selectedClass = selection;
-                                selectedEscalao = null;
-                                salarioBase = null;
-                              });
+                              testeData.selectedClass = selection;
+                              testeData.selectedEscalao = null;
+                              testeData.salarioBase = null;
                             },
                             hint: Padding(
                               padding: const EdgeInsets.only(left: 20),
@@ -258,11 +244,9 @@ class _WageMappingScreenState extends State<WageMappingScreen> {
                               return DropdownMenuItem<String>(
                                 value: e,
                                 onTap: () {
-                                  setState(() {
-                                    selectedClass = e;
-                                    selectedEscalao = null;
-                                    salarioBase = null;
-                                  });
+                                  testeData.selectedClass = e;
+                                  testeData.selectedEscalao = null;
+                                  testeData.salarioBase = null;
                                 },
                                 child: Row(
                                   children: [
@@ -307,15 +291,13 @@ class _WageMappingScreenState extends State<WageMappingScreen> {
                             isDense: true,
                             iconSize: 20,
                             icon: Icon(Icons.arrow_drop_down),
-                            dropdownColor: Colors.lightBlue[100],
+                            dropdownColor: Theme.of(context).primaryColorLight,
                             value: selectedEscalao,
                             isExpanded: true,
                             focusColor: Theme.of(context).primaryColor,
                             onChanged: (selection) {
-                              setState(() {
-                                selectedEscalao = selection;
-                                salarioBase = null;
-                              });
+                              testeData.selectedEscalao = selection;
+                              salarioBase = null;
                             },
                             hint: Padding(
                               padding: const EdgeInsets.only(left: 17),
@@ -331,12 +313,8 @@ class _WageMappingScreenState extends State<WageMappingScreen> {
                                 return DropdownMenuItem<int>(
                                   value: e,
                                   onTap: () {
-                                    setState(
-                                      () {
-                                        selectedEscalao = e;
-                                        salarioBase = null;
-                                      },
-                                    );
+                                    selectedEscalao = e;
+                                    salarioBase = null;
                                   },
                                   child: Row(
                                     children: [
@@ -363,7 +341,7 @@ class _WageMappingScreenState extends State<WageMappingScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 75),
+                  SizedBox(height: 90),
                   AbstractViewModel().roundedButtom(context,
                       title: "Calcular Salário Base", onPressed: () {}),
                   Text(

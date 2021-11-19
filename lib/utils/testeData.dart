@@ -8,6 +8,7 @@ class TesteData extends ChangeNotifier {
   double _salarioBase;
   String _selectedRegime;
   String _type;
+  String _categoryOccupation;
 
   DateTime _startDate = DateTime.now();
   DateTime _endDate = DateTime.now();
@@ -58,6 +59,7 @@ class TesteData extends ChangeNotifier {
   DateTime get startDate => _startDate;
   DateTime get endDate => _endDate;
   String get type => _type;
+  String get categoryOccupation => _categoryOccupation;
 
   set selectedCareer(String value) {
     _selectedCareer = value;
@@ -96,6 +98,15 @@ class TesteData extends ChangeNotifier {
 
   set type(String value) {
     _type = value;
+    notifyListeners();
+  }
+
+  set categotyOccupation(String value) {
+    if (this.selectedRegime == regime[0].toString()) {
+      _categoryOccupation = 'Classe';
+    } else {
+      _categoryOccupation = 'Categoria';
+    }
     notifyListeners();
   }
 

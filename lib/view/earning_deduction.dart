@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:career_app/model/drawer/drawer.dart';
 import 'package:career_app/utils/testeData.dart';
 import 'package:career_app/view_model/abstract_view_model.dart';
@@ -23,44 +25,45 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List carreiras = context.read<TesteData>().carreiras;
+    final testeData = context.read<TesteData>();
 
-    List classes = context.read<TesteData>().classes;
+    List carreiras = testeData.carreiras;
 
-    List escalao = context.read<TesteData>().escalao;
+    List classes = testeData.classes;
 
-    List edt = context.read<TesteData>().earningDeductionTypes;
+    List escalao = testeData.escalao;
 
-    String selectedRegime = context.read<TesteData>().selectedRegime;
+    List edt = testeData.earningDeductionTypes;
 
-    String selectedCareer = context.read<TesteData>().selectedCareer;
+    String selectedRegime = testeData.selectedRegime;
 
-    String selectedClass = context.read<TesteData>().selectedClass;
+    String selectedCareer = testeData.selectedCareer;
 
-    num selectedEscalao = context.read<TesteData>().selectedEscalao;
+    String selectedClass = testeData.selectedClass;
 
-    double salarioBase = context.read<TesteData>().salarioBase;
+    num selectedEscalao = testeData.selectedEscalao;
 
-    final formater = context.read<TesteData>().formater;
+    double salarioBase = testeData.salarioBase;
 
-    DateTime startDate = context.read<TesteData>().startDate;
-    DateTime endDate = context.read<TesteData>().endDate;
+    final formater = testeData.formater;
 
-    String type = context.read<TesteData>().type;
+    DateTime startDate = testeData.startDate;
+    DateTime endDate = testeData.endDate;
+
+    String type = testeData.type;
 
     return Scaffold(
       drawer: CareerDrawer(),
       appBar: CareerAppBar.appBar(context, title: 'Registar Abono ou Desconto'),
       body: Container(
         height: double.infinity,
-        width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
               colors: [Colors.blueGrey[300], Colors.white30],
               begin: Alignment.topRight,
               end: Alignment.bottomLeft),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: SingleChildScrollView(
           child: Container(
             child: Center(
@@ -84,20 +87,23 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                     SizedBox(height: 30),
                     Row(
                       children: [
-                        Text(
-                          "Tipo :",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  .fontSize,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            "Tipo :",
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    .fontSize,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         SizedBox(width: 20),
                         Expanded(
+                          flex: 8,
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
                             child: DropdownButton<String>(
                               menuMaxHeight: 250,
                               isDense: true,
@@ -108,7 +114,7 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                               value: (context).watch<TesteData>().type,
                               isExpanded: true,
                               onChanged: (selection) {
-                                (context).read<TesteData>().type = selection;
+                                testeData.type = selection;
                               },
                               hint: const Text(
                                 "Selecione um abono/desconto",
@@ -166,16 +172,14 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                         GestureDetector(
                           onTap: () =>
                               _selectDate(context: context, selectedDate: 1),
-                          child: Expanded(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width - 100,
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: 0.5, color: Colors.blueGrey))),
-                              child: Text(
-                                "${formater.format(startDate)}",
-                              ),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width - 100,
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 0.5, color: Colors.blueGrey))),
+                            child: Text(
+                              "${formater.format(startDate)}",
                             ),
                           ),
                         ),
@@ -198,22 +202,20 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                         GestureDetector(
                           onTap: () =>
                               _selectDate(context: context, selectedDate: 2),
-                          child: Expanded(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width - 100,
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: 0.5, color: Colors.blueGrey))),
-                              child: Text(
-                                "${formater.format(endDate)}",
-                              ),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width - 100,
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 0.5, color: Colors.blueGrey))),
+                            child: Text(
+                              "${formater.format(endDate)}",
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 5),
                     Row(
                       children: [
                         Text("Valor :",
@@ -226,32 +228,44 @@ class _EarningAndDeductionScreenState extends State<EarningAndDeductionScreen> {
                                 fontWeight: FontWeight.bold)),
                         SizedBox(width: 20),
                         Expanded(
-                          child: Container(
-                            child: TextField(
-                              controller: valorController,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(suffixText: 'MZN'),
+                          child: TextField(
+                            style: TextStyle(fontSize: 15),
+                            controller: valorController,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              suffixText: 'MZN',
+                              suffixStyle: TextStyle(
+                                fontSize: 12,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              border: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 0.5, color: Colors.blueGrey),
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 65),
-                    AbstractViewModel().roundedButtom(context,
-                        title: 'Registar', onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: Theme.of(context).primaryColor,
-                          content: Text(
-                            '${context.read<TesteData>().type} registado com sucesso',
-                            textAlign: TextAlign.center,
+                    SizedBox(height: 90),
+                    AbstractViewModel().roundedButtom(
+                      context,
+                      title: 'Registar',
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Theme.of(context).primaryColor,
+                            content: Text(
+                              '${testeData.type} registado com sucesso',
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
