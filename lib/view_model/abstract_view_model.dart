@@ -79,7 +79,7 @@ class AbstractViewModel extends ChangeNotifier {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           elevation: 5,
-          primary: Theme.of(context).primaryColorDark,
+          primary: Theme.of(context).primaryColor,
           onPrimary: Colors.white,
           shape: const RoundedRectangleBorder(
               side: BorderSide.none,

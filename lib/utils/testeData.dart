@@ -9,6 +9,10 @@ class TesteData extends ChangeNotifier {
   String _selectedRegime;
   String _type;
   String _categoryOccupation;
+  String _categorys;
+  String _occupations;
+  String _selectedCategorys;
+  String _selectedOccupations;
 
   DateTime _startDate = DateTime.now();
   DateTime _endDate = DateTime.now();
@@ -33,6 +37,29 @@ class TesteData extends ChangeNotifier {
     "Classe B",
     "Classe C",
     "Classe E",
+    "Classe UNIQUE"
+  ];
+
+  List categorys = [
+    'Inspector Superior das Actividades Economicas A',
+    'Inspector Superior das Actividades Economicas B',
+    'Inspector Superior das Actividades Economicas C',
+    'Inspector Superior das Actividades Economicas D'
+  ];
+
+  List classeCategorys = [];
+
+  List occupations = [
+    "Demógrafo B",
+    "Redactor Parlamentar B",
+    "Técnico petroquímico B",
+    "Museólogo A,Engenheiro hidráulico A",
+    "Técnico legislativo B",
+    "Assistente técnico de comércio internacional",
+    "Técnico de turismo C",
+    "Técnico de tratamento mineiro B",
+    "Hidrometrista D",
+    "Técnico de emprego B"
   ];
 
   List escalao = [
@@ -60,6 +87,7 @@ class TesteData extends ChangeNotifier {
   DateTime get endDate => _endDate;
   String get type => _type;
   String get categoryOccupation => _categoryOccupation;
+  String get selectedCategorys => _selectedCategorys;
 
   set selectedCareer(String value) {
     _selectedCareer = value;
@@ -83,6 +111,14 @@ class TesteData extends ChangeNotifier {
 
   set selectedRegime(String value) {
     _selectedRegime = value;
+
+    if (value == "Especial diferenciado") {
+      categoryOccupation = "Categoria";
+      classeCategorys = categorys;
+    } else {
+      categoryOccupation = "Classe";
+      classeCategorys = classes;
+    }
     notifyListeners();
   }
 
@@ -101,11 +137,26 @@ class TesteData extends ChangeNotifier {
     notifyListeners();
   }
 
-  set categotyOccupation(String value) {
-    if (this.selectedRegime == regime[0].toString()) {
-      _categoryOccupation = 'Classe';
+  set selectedCategotys(String value) {
+    _selectedCategorys = value;
+    notifyListeners();
+  }
+
+  set selectedOccupations(String value) {
+    _selectedOccupations = value;
+    notifyListeners();
+  }
+
+  set categoryOccupation(String value) {
+    _categoryOccupation = value;
+    notifyListeners();
+  }
+
+  getCareerCategoryList() {
+    if (selectedRegime == regime[3]) {
+      List classeCategorys = categorys;
     } else {
-      _categoryOccupation = 'Categoria';
+      List classeCategorys = classes;
     }
     notifyListeners();
   }

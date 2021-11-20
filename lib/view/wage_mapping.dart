@@ -13,9 +13,10 @@ class WageMappingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final testeData = context.read<TesteData>();
+
     List carreiras = testeData.carreiras;
 
-    List classes = testeData.classes;
+    List classes = testeData.classeCategorys;
 
     List escalao = testeData.escalao;
 
@@ -38,6 +39,8 @@ class WageMappingScreen extends StatelessWidget {
     DateTime startDate = testeData.startDate;
 
     DateTime endDate = testeData.endDate;
+
+    String classeCategory = testeData.categoryOccupation;
 
     return Scaffold(
       drawer: CareerDrawer(),
@@ -82,7 +85,7 @@ class WageMappingScreen extends StatelessWidget {
                       SizedBox(width: 20),
                       Expanded(
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          // padding: EdgeInsets.symmetric(horizontal: 8),
                           child: DropdownButton<String>(
                             menuMaxHeight: 250,
                             isDense: true,
@@ -94,13 +97,10 @@ class WageMappingScreen extends StatelessWidget {
                             onChanged: (selection) {
                               testeData.selectedRegime = selection;
                             },
-                            hint: Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: const Text(
-                                "Selecione um regime",
-                                style: TextStyle(
-                                  fontSize: 13.5,
-                                ),
+                            hint: const Text(
+                              "Selecione um regime",
+                              style: TextStyle(
+                                fontSize: 13.5,
                               ),
                             ),
                             iconEnabledColor: Theme.of(context).primaryColor,
@@ -108,7 +108,7 @@ class WageMappingScreen extends StatelessWidget {
                               return DropdownMenuItem<String>(
                                   value: e,
                                   onTap: () {
-                                    selectedRegime = e;
+                                    testeData.selectedRegime = e;
                                     testeData.selectedCareer = null;
                                     testeData.selectedClass = null;
                                     testeData.selectedEscalao = null;
@@ -116,7 +116,6 @@ class WageMappingScreen extends StatelessWidget {
                                   },
                                   child: Row(
                                     children: [
-                                      SizedBox(width: 20),
                                       Text(
                                         e,
                                         style: TextStyle(
@@ -148,10 +147,9 @@ class WageMappingScreen extends StatelessWidget {
                                 Theme.of(context).textTheme.bodyText1.fontSize,
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(width: 20),
                       Expanded(
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          // padding: EdgeInsets.symmetric(horizontal: 8),
                           child: DropdownButton<String>(
                             menuMaxHeight: 250,
                             isDense: true,
@@ -205,19 +203,23 @@ class WageMappingScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   Row(
+                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text("Classe  :",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  .fontSize,
-                              fontWeight: FontWeight.bold)),
-                      SizedBox(width: 20),
                       Expanded(
+                        flex: 2,
+                        child: Text(
+                            "${classeCategory == null ? 'Classe' : classeCategory}:",
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    .fontSize,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                      Expanded(
+                        flex: 8,
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
                           child: DropdownButton<String>(
                             menuMaxHeight: 250,
                             iconEnabledColor: Theme.of(context).primaryColor,
@@ -233,12 +235,9 @@ class WageMappingScreen extends StatelessWidget {
                               testeData.selectedEscalao = null;
                               testeData.salarioBase = null;
                             },
-                            hint: Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: const Text(
-                                "Selecione a classe",
-                                style: TextStyle(fontSize: 13.5),
-                              ),
+                            hint: Text(
+                              "Selecione a ${classeCategory == null ? 'Classe' : classeCategory}",
+                              style: TextStyle(fontSize: 13.5),
                             ),
                             items: classes.map((e) {
                               return DropdownMenuItem<String>(
@@ -248,20 +247,15 @@ class WageMappingScreen extends StatelessWidget {
                                   testeData.selectedEscalao = null;
                                   testeData.salarioBase = null;
                                 },
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20),
-                                    Text(
-                                      e,
-                                      style: TextStyle(
-                                        color: Colors.grey[600],
-                                        fontSize: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            .fontSize,
-                                      ),
-                                    ),
-                                  ],
+                                child: Text(
+                                  e,
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        .fontSize,
+                                  ),
                                 ),
                               );
                             }).toList(),
@@ -281,10 +275,10 @@ class WageMappingScreen extends StatelessWidget {
                                   .bodyText1
                                   .fontSize,
                               fontWeight: FontWeight.bold)),
-                      SizedBox(width: 20),
+                      // SizedBox(width: 20),
                       Expanded(
                         child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          // padding: EdgeInsets.symmetric(horizontal: 8),
                           child: DropdownButton<int>(
                             menuMaxHeight: 250,
                             iconEnabledColor: Theme.of(context).primaryColor,
