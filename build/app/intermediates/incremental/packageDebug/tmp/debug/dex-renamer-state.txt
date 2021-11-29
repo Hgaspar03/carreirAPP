@@ -1,4 +1,4 @@
-#Sat Nov 20 11:27:40 CAT 2021
+#Mon Nov 29 20:49:40 CAT 2021
 base.0=/home/hgaspar/Desktop/career-app/career_app/carreirAPP/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

@@ -42,6 +42,8 @@ class WageMappingScreen extends StatelessWidget {
 
     String classeCategory = testeData.categoryOccupation;
 
+    final _form = GlobalKey<FormState>();
+
     return Scaffold(
       drawer: CareerDrawer(),
       appBar: CareerAppBar.appBar(context, title: "Mapeamento Salarial"),
@@ -56,37 +58,40 @@ class WageMappingScreen extends StatelessWidget {
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
-          child: Container(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: 180,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 90),
-                      child: const Text(
-                        "Preencha os dados da sua carreira",
-                        style: TextStyle(fontSize: 16, color: Colors.blueGrey),
-                        textAlign: TextAlign.center,
+          child: Form(
+            key: _form,
+            child: Container(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 180,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 90),
+                        child: const Text(
+                          "Preencha os dados da sua carreira",
+                          style:
+                              TextStyle(fontSize: 16, color: Colors.blueGrey),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Regime :",
-                        style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize:
-                                Theme.of(context).textTheme.bodyText1.fontSize,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(width: 20),
-                      Expanded(
-                        child: Container(
-                          // padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: DropdownButton<String>(
+                    Row(
+                      children: [
+                        Text(
+                          "Regime :",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .fontSize,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
                             menuMaxHeight: 250,
                             isDense: true,
                             iconSize: 20,
@@ -94,6 +99,12 @@ class WageMappingScreen extends StatelessWidget {
                             dropdownColor: Theme.of(context).primaryColorLight,
                             value: context.watch<TesteData>().selectedRegime,
                             isExpanded: true,
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(
+                                  borderSide: BorderSide.none),
+                            ),
+                            validator: (val) =>
+                                val == null ? "Informe o regime" : null,
                             onChanged: (selection) {
                               testeData.selectedRegime = selection;
                             },
@@ -131,26 +142,36 @@ class WageMappingScreen extends StatelessWidget {
                             }).toList(),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Carreira:",
-                        style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize:
-                                Theme.of(context).textTheme.bodyText1.fontSize,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Expanded(
-                        child: Container(
-                          // padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: DropdownButton<String>(
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Carreira:",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .fontSize,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(
+                                  borderSide: BorderSide.none),
+                            ),
+                            validator: (val) {
+                              if (selectedRegime == null) {
+                                return '       Informe primeiro o regime da carreira';
+                              }
+                              if (val == null) {
+                                return '       Informe a carreira';
+                              }
+
+                              return null;
+                            },
                             menuMaxHeight: 250,
                             isDense: true,
                             iconSize: 20,
@@ -198,17 +219,76 @@ class WageMappingScreen extends StatelessWidget {
                             }).toList(),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                            "${classeCategory == null ? 'Classe' : classeCategory}:",
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                              "${classeCategory == null ? 'Classe' : classeCategory}:",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      .fontSize,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        Expanded(
+                          flex: 8,
+                          child: Container(
+                            height: 20,
+                            child: DropdownButton<String>(
+                              menuMaxHeight: 250,
+                              iconEnabledColor: Theme.of(context).primaryColor,
+                              isDense: true,
+                              iconSize: 20,
+                              icon: Icon(Icons.arrow_drop_down),
+                              dropdownColor:
+                                  Theme.of(context).primaryColorLight,
+                              value: selectedClass,
+                              isExpanded: true,
+                              focusColor: Theme.of(context).primaryColor,
+                              onChanged: (selection) {
+                                testeData.selectedClass = selection;
+                                testeData.selectedEscalao = null;
+                                testeData.salarioBase = null;
+                              },
+                              hint: Text(
+                                "Selecione a ${classeCategory == null ? 'Classe' : classeCategory}",
+                                style: TextStyle(fontSize: 13.5),
+                              ),
+                              items: classes.map((e) {
+                                return DropdownMenuItem<String>(
+                                  value: e,
+                                  onTap: () {
+                                    testeData.selectedClass = e;
+                                    testeData.selectedEscalao = null;
+                                    testeData.salarioBase = null;
+                                  },
+                                  child: SizedBox(
+                                    height: 50,
+                                    child: Text(
+                                      e,
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: classeCategory == 'Classe'
+                                              ? 14
+                                              : 12.5),
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Text("Escalão :",
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: Theme.of(context)
@@ -216,134 +296,81 @@ class WageMappingScreen extends StatelessWidget {
                                     .bodyText1
                                     .fontSize,
                                 fontWeight: FontWeight.bold)),
-                      ),
-                      Expanded(
-                        flex: 8,
-                        child: Container(
-                          child: DropdownButton<String>(
-                            menuMaxHeight: 250,
-                            iconEnabledColor: Theme.of(context).primaryColor,
-                            isDense: true,
-                            iconSize: 20,
-                            icon: Icon(Icons.arrow_drop_down),
-                            dropdownColor: Theme.of(context).primaryColorLight,
-                            value: selectedClass,
-                            isExpanded: true,
-                            focusColor: Theme.of(context).primaryColor,
-                            onChanged: (selection) {
-                              testeData.selectedClass = selection;
-                              testeData.selectedEscalao = null;
-                              testeData.salarioBase = null;
-                            },
-                            hint: Text(
-                              "Selecione a ${classeCategory == null ? 'Classe' : classeCategory}",
-                              style: TextStyle(fontSize: 13.5),
-                            ),
-                            items: classes.map((e) {
-                              return DropdownMenuItem<String>(
-                                value: e,
-                                onTap: () {
-                                  testeData.selectedClass = e;
-                                  testeData.selectedEscalao = null;
-                                  testeData.salarioBase = null;
-                                },
-                                child: Text(
-                                  e,
+                        // SizedBox(width: 20),
+                        Expanded(
+                          child: Container(
+                            // padding: EdgeInsets.symmetric(horizontal: 8),
+                            child: DropdownButton<int>(
+                              menuMaxHeight: 250,
+                              iconEnabledColor: Theme.of(context).primaryColor,
+                              isDense: true,
+                              iconSize: 20,
+                              icon: Icon(Icons.arrow_drop_down),
+                              dropdownColor:
+                                  Theme.of(context).primaryColorLight,
+                              value: selectedEscalao,
+                              isExpanded: true,
+                              focusColor: Theme.of(context).primaryColor,
+                              onChanged: (selection) {
+                                testeData.selectedEscalao = selection;
+                                salarioBase = null;
+                              },
+                              hint: Padding(
+                                padding: const EdgeInsets.only(left: 17),
+                                child: const Text(
+                                  "Selecione o escalão",
                                   style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1
-                                        .fontSize,
+                                    fontSize: 13.5,
                                   ),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Text("Escalão :",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  .fontSize,
-                              fontWeight: FontWeight.bold)),
-                      // SizedBox(width: 20),
-                      Expanded(
-                        child: Container(
-                          // padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: DropdownButton<int>(
-                            menuMaxHeight: 250,
-                            iconEnabledColor: Theme.of(context).primaryColor,
-                            isDense: true,
-                            iconSize: 20,
-                            icon: Icon(Icons.arrow_drop_down),
-                            dropdownColor: Theme.of(context).primaryColorLight,
-                            value: selectedEscalao,
-                            isExpanded: true,
-                            focusColor: Theme.of(context).primaryColor,
-                            onChanged: (selection) {
-                              testeData.selectedEscalao = selection;
-                              salarioBase = null;
-                            },
-                            hint: Padding(
-                              padding: const EdgeInsets.only(left: 17),
-                              child: const Text(
-                                "Selecione o escalão",
-                                style: TextStyle(
-                                  fontSize: 13.5,
                                 ),
                               ),
-                            ),
-                            items: escalao.map(
-                              (e) {
-                                return DropdownMenuItem<int>(
-                                  value: e,
-                                  onTap: () {
-                                    selectedEscalao = e;
-                                    salarioBase = null;
-                                  },
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(
-                                        '$e',
-                                        style: TextStyle(
-                                          color: Colors.grey[600],
-                                          fontSize: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1
-                                              .fontSize,
+                              items: escalao.map(
+                                (e) {
+                                  return DropdownMenuItem<int>(
+                                    value: e,
+                                    onTap: () {
+                                      selectedEscalao = e;
+                                      salarioBase = null;
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 20,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ).toList(),
+                                        Text(
+                                          '$e',
+                                          style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                .fontSize,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ).toList(),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 90),
-                  AbstractViewModel().roundedButtom(context,
-                      title: "Calcular Salário Base", onPressed: () {}),
-                  Text(
-                    " ${salarioBase != null ? salarioBase : " "} ${salarioBase != null ? "MZN" : " "}",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 22, color: Colors.grey[600]),
-                  ),
-                ],
+                      ],
+                    ),
+                    SizedBox(height: 90),
+                    AbstractViewModel().roundedButtom(context,
+                        title: "Calcular Salário Base", onPressed: () {
+                      if (_form.currentState.validate()) {
+                        salarioBase = 250000;
+                      }
+                    }),
+                    Text(
+                      " ${salarioBase != null ? salarioBase : " "} ${salarioBase != null ? "MZN" : " "}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 22, color: Colors.grey[600]),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
