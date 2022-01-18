@@ -1,4 +1,4 @@
-import 'package:career_app/utils/testeData.dart';
+  import 'package:career_app/utils/testeData.dart';
 import 'package:career_app/view/earning_deduction.dart';
 import 'package:flutter/material.dart';
 import 'model/drawer/drawer.dart';
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Aplicativo de carreiras',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.indigo,
       ),
       home: EarningAndDeductionScreen(),
     );
@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 0,
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColorDark,
-        title: Text("CarreirAPP"),
+        title: Text("CarreirApp"),
       ),
       body: Container(
         color: Colors.blueGrey,

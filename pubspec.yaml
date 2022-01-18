@@ -31,6 +31,7 @@ dependencies:
   flutter_masked_text: ^0.7.0
   intl: ^0.17.0
   provider: ^6.0.1
+  http: ^0.12.0+2
 
 dev_dependencies:
   flutter_test:
