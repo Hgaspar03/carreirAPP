@@ -1,0 +1,3 @@
+enum Type {
+  CLASS,CATEGORY
+}

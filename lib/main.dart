@@ -1,12 +1,12 @@
-  import 'package:career_app/utils/testeData.dart';
-import 'package:career_app/view/earning_deduction.dart';
+import 'package:career_app/view_model/career_viewModel.dart';
+import 'package:career_app/view/earning_deduction_view.dart';
 import 'package:flutter/material.dart';
-import 'model/drawer/drawer.dart';
+import 'view/drawer/drawer.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => TesteData()),
+    ChangeNotifierProvider(create: (_) => CareerViewModel()),
   ], child: MyApp()));
 }
 

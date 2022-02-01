@@ -1,9 +1,9 @@
-import 'package:career_app/view/earning_deduction.dart';
-import 'package:career_app/view/loan_simulator.dart';
-import 'package:career_app/view/perfil-screen.dart';
-import 'package:career_app/view/settings.dart';
-import 'package:career_app/view/tax.dart';
-import 'package:career_app/view/wage_mapping.dart';
+import 'package:career_app/view/earning_deduction_view.dart';
+import 'package:career_app/view/loan_simulator_view.dart';
+import 'package:career_app/view/perfil_view.dart';
+import 'package:career_app/view/settings_view.dart';
+import 'package:career_app/view/tax_view.dart';
+import 'package:career_app/view/wage_mapping_view.dart';
 
 class Routes {
   static const String perfil = PersfilScreen.profileRoute;
