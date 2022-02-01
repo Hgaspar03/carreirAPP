@@ -7,6 +7,7 @@ import 'package:career_app/view_model/career_viewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CareerScreen extends StatefulWidget {
@@ -103,8 +104,7 @@ class _CareerScreenState extends State<CareerScreen> {
                               (career) => ListTile(
                                 title: Text(
                                   career,
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
+                                  style:GoogleFonts.comfortaa( color: Theme.of(context).primaryColor, fontWeight: FontWeight.w600),
                                 ),
                                 onTap: () {
                                   Navigator.of(context).push(

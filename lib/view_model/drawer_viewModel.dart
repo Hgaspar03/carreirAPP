@@ -1,6 +1,7 @@
-import 'package:career_app/view/career_list_view.dart';
-import 'package:career_app/view_model/career_viewModel.dart';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DrawerViewModel extends StatelessWidget {
   const DrawerViewModel({Key key}) : super(key: key);
@@ -13,9 +14,9 @@ class DrawerViewModel extends StatelessWidget {
     return ListTile(
       title: Text(
         "$title",
-        style: TextStyle(color: Colors.blueGrey[600]),
+        style: GoogleFonts.comfortaa(fontSize: 13.50  , color: Colors.blueGrey[600], fontWeight: FontWeight.w900),
       ),
-      trailing: Icon(icon),
+      trailing: Icon(icon,color: Colors.blueGrey[700],),
       minVerticalPadding: 5,
       selectedTileColor: Colors.grey,
       dense: true,
